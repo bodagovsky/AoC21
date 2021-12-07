@@ -27,22 +27,32 @@ class Solution:
 
     def __init__(self, input: TextIO):
         self.input = input
+        self.counted = {}
 
     def star_one(self):
         fish = [[int(n), 80] for n in self.input.readline().strip().split(",")]
         total = len(fish)
 
-        while fish:
-            f = fish[0]
-            fish = fish[1:]
+        for f in fish:
+            if f[0] in self.counted:
+                total += self.counted[f]
+                continue
 
-            children, days = count(f[0], f[1])
+            fish_array = [f]
+            tmp_total = 0
 
-            total += children
+            while fish_array:
+                f = fish_array.pop()
 
-            for _ in range(children):
-                fish.append([8, days])
-                days -= 7
+                children, days = count(f[0], f[1])
+
+                tmp_total += children
+
+                for _ in range(children):
+                    fish_array.append([8, days])
+                    days -= 7
+            total += tmp_total
+            self.counted[f[0]] = total
         print(total)
         return total
 
