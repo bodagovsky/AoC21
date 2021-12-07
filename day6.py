@@ -3,7 +3,7 @@ from typing import TextIO
 
 
 def count(n: int, days: int):
-    if days == 0:
+    if days < n:
         return 0,0
 
     if n <= 6:
@@ -29,28 +29,26 @@ class Solution:
         self.input = input
 
     def star_one(self):
-        fish = [[int(n), 18] for n in self.input.readline().strip().split(",")]
+        fish = [[int(n), 80] for n in self.input.readline().strip().split(",")]
         total = len(fish)
 
         while fish:
             f = fish[0]
             fish = fish[1:]
 
-            print(f)
-
             children, days = count(f[0], f[1])
+
             total += children
 
             for _ in range(children):
                 fish.append([8, days])
                 days -= 7
-
         print(total)
         return total
 
 
 if __name__ == '__main__':
-    with open("/Users/aabodagovskiy/advent_of_code_2021/input/day6/test_input.txt") as input:
+    with open("/Users/aabodagovskiy/advent_of_code_2021/input/day6/input.txt") as input:
         Solution(input).star_one()
 
 
