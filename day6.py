@@ -3,6 +3,8 @@ from typing import TextIO
 
 
 def count(n: int, days: int):
+    if days == 0:
+        return 0,0
 
     if n <= 6:
         div, mod = divmod(days, 7)
@@ -12,14 +14,13 @@ def count(n: int, days: int):
 
     else:
         d = days - (n - 6)
-        n = 6
+        x = 6
         div, mod = divmod(d, 7)
         amount = div
-        if mod > n:
+        if mod > x:
             amount += 1
-    if mod == 0:
-        days -= 7
-    return amount, days - mod
+
+    return amount, days - (n+1)
 
 
 class Solution:
@@ -34,6 +35,8 @@ class Solution:
         while fish:
             f = fish[0]
             fish = fish[1:]
+
+            print(f)
 
             children, days = count(f[0], f[1])
             total += children
